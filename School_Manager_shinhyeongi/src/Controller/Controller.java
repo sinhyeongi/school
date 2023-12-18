@@ -7,7 +7,7 @@ import DAO.SubjectDAO;
 import Model.Util;
 
 public class Controller {
-	Util u;
+	private Util u;
 	private StudentDAO studao;
 	private SubjectDAO subdao;
 	public Controller() {
