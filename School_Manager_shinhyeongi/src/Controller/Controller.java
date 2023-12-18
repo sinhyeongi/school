@@ -13,8 +13,8 @@ public class Controller {
 	public Controller() {
 		// TODO Auto-generated constructor stub
 		u = Util.GetInstance();
-		studao = new StudentDAO();
-		subdao = new SubjectDAO();
+		studao = StudentDAO.getInstance();
+		subdao = SubjectDAO.GetInstance();
 	}
 	//파일 로드
 	private void RoadFile(ArrayList<String> data) {

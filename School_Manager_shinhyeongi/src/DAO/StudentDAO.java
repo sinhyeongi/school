@@ -7,11 +7,16 @@ import Model.Student;
 public class StudentDAO {
 	ArrayList<Student> stulist;
 
-	public StudentDAO() {
+	private StudentDAO() {
 		// TODO Auto-generated constructor stub
 		stulist = new ArrayList<Student>();
 	}
-
+	private static StudentDAO instance;
+	
+	public static StudentDAO getInstance() {
+		if(instance == null) instance = new StudentDAO();
+		return instance;
+	}
 	public int GetSize() {
 		return stulist.size();
 	}

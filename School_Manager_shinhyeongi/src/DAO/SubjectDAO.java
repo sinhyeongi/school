@@ -7,9 +7,16 @@ import Model.Subject;
 public class SubjectDAO {
 	ArrayList<Subject> sublist;
 
-	public SubjectDAO() {
+	private SubjectDAO() {
 		// TODO Auto-generated constructor stub
 		sublist = new ArrayList<Subject>();
+	}
+	
+	private static SubjectDAO instance;
+	public static SubjectDAO GetInstance() {
+		if(instance == null) instance = new SubjectDAO();
+		
+		return instance;
 	}
 	public String SaveData(){
 		String data ="";
