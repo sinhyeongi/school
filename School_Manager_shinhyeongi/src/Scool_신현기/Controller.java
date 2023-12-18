@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public class Controller {
 	Util u;
-	StudentDAO studao;
-	SubjectDAO subdao;
+	private StudentDAO studao;
+	private SubjectDAO subdao;
 	public Controller() {
 		// TODO Auto-generated constructor stub
 		u = new Util();
