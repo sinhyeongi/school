@@ -1,4 +1,6 @@
-package School_신현기;
+package _Main;
+
+import Controller.Controller;
 
 public class _Main {
 

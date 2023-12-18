@@ -1,6 +1,8 @@
-package School_신현기;
+package DAO;
 
 import java.util.ArrayList;
+
+import Model.Student;
 
 public class StudentDAO {
 	ArrayList<Student> stulist;
@@ -10,52 +12,53 @@ public class StudentDAO {
 		stulist = new ArrayList<Student>();
 	}
 
-	int GetSize() {
+	public int GetSize() {
 		return stulist.size();
 	}
 
-	void RoadFile(String data) {
-		if(stulist.size() != 0)
+	public void RoadFile(String data) {
+		if (stulist.size() != 0)
 			stulist.clear();
-		ArrayList<String> list = new ArrayList<String>(); 
-		for(int i = 0 ; i < data.split("\n").length; i++) {
+		ArrayList<String> list = new ArrayList<String>();
+		for (int i = 0; i < data.split("\n").length; i++) {
 			list.add(data.split("\n")[i]);
 		}
 		for (int i = 0; i < list.size(); i++) {
-			stulist.add(new Student(Integer.parseInt(list.get(i).split("/")[0]), list.get(i).split("/")[1], list.get(i).split("/")[2]));
+			stulist.add(new Student(Integer.parseInt(list.get(i).split("/")[0]), list.get(i).split("/")[1],
+					list.get(i).split("/")[2]));
 		}
 	}
 
-	boolean CheckStuId(String id) {
+	public boolean CheckStuId(String id) {
 		for (Student s : stulist) {
-			if (s.stuId.equals(id))
+			if (s.getStuId().equals(id))
 				return true;
 		}
 		return false;
 	}
 
-	int StudentIdx(String id) {
+	public int StudentIdx(String id) {
 		for (int i = 0; i < stulist.size(); i++) {
-			if (id.equals(stulist.get(i).stuId)) {
+			if (id.equals(stulist.get(i).getStuId())) {
 				return i;
 			}
 		}
 		return -1;
 	}
 
-	ArrayList<String> AlluserData() {
+	public ArrayList<String> AlluserData() {
 		if (stulist.size() == 0) {
 			System.out.println("데이터가 없습니다 !");
 			return null;
 		}
 		ArrayList<String> list = new ArrayList<String>();
 		for (int i = 0; i < stulist.size(); i++) {
-			list.add(stulist.get(i).stuNo + "\t" + stulist.get(i).stuName + "\t" + stulist.get(i).stuId);
+			list.add(stulist.get(i).getStuNo() + "\t" + stulist.get(i).getStuName() + "\t" + stulist.get(i).getStuId());
 		}
 		return list;
 	}
 
-	String SaveData() {
+	public String SaveData() {
 		String data = "";
 		for (Student stu : stulist) {
 			data += stu.toString() + "\n";
@@ -65,13 +68,14 @@ public class StudentDAO {
 		return data;
 	}
 
-	ArrayList<String> SubjectStudentNameId(String data) {
+	public ArrayList<String> SubjectStudentNameId(String data) {
 		ArrayList<String> list = new ArrayList<String>();
 		for (int i = 0; i < data.split("/").length; i++) {
 			String data2 = "";
 			for (int i2 = 0; i2 < stulist.size(); i2++) {
-				if (Integer.parseInt(data.split("/")[i]) == stulist.get(i2).stuNo) {
-					data2 += data.split("/")[i] + "\t" + stulist.get(i2).stuName + "\t" + stulist.get(i2).stuId;
+				if (Integer.parseInt(data.split("/")[i]) == stulist.get(i2).getStuNo()) {
+					data2 += data.split("/")[i] + "\t" + stulist.get(i2).getStuName() + "\t"
+							+ stulist.get(i2).getStuId();
 					break;
 				}
 			}
@@ -80,21 +84,19 @@ public class StudentDAO {
 		return list;
 	}
 
-	
-
-	int Studenthackbun(int id) {
+	public int Studenthackbun(int id) {
 		for (int i = 0; i < stulist.size(); i++) {
-			if (id == stulist.get(i).stuNo) {
+			if (id == stulist.get(i).getStuNo()) {
 				return i;
 			}
 		}
 		return -1;
 	}
 
-	String AllUserNo() {
+	public String AllUserNo() {
 		String s = "";
 		for (Student st : stulist) {
-			s += st.stuNo + "/";
+			s += st.getStuNo() + "/";
 		}
 		s = s.substring(0, s.length() - 1);
 		return s;
@@ -105,7 +107,7 @@ public class StudentDAO {
 		// TODO Auto-generated method stub
 		String data = "";
 		for (Student s : stulist) {
-			data += s.stuNo + "\t" + s.stuName + "\t" + s.stuId + "\n";
+			data += s.getStuNo() + "\t" + s.getStuName() + "\t" + s.getStuId() + "\n";
 		}
 		if (!data.isBlank()) {
 			data = data.substring(0, data.length() - 1);
@@ -113,18 +115,18 @@ public class StudentDAO {
 		return data;
 	}
 
-	void NewStudent(String id, String name) {
+	public void NewStudent(String id, String name) {
 		if (stulist.size() == 0) {
 			stulist.add(new Student(1001, name, id));
 		} else {
-			stulist.add(new Student(stulist.get(stulist.size() - 1).stuNo + 1, name, id));
+			stulist.add(new Student(stulist.get(stulist.size() - 1).getStuNo() + 1, name, id));
 		}
 		System.out.println(name + "학생 추가 완료");
 	}
 
-	int DeleteStudent(String id) {
+	public int DeleteStudent(String id) {
 		int idx = StudentIdx(id);
-		int data = stulist.get(idx).stuNo;
+		int data = stulist.get(idx).getStuNo();
 		if (stulist.size() == 1) {
 			stulist.clear();
 		} else {

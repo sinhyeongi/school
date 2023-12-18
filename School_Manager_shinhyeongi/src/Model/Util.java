@@ -1,4 +1,4 @@
-package School_신현기;
+package Model;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -11,13 +11,19 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Util {
-	Scanner scanner;
+	private Scanner scanner;
 
-	public Util() {
+	private Util() {
 		// TODO Auto-generated constructor stub
 		scanner = new Scanner(System.in);
 	}
-	int getInt(String s) {
+	private static Util instance;
+	
+	public static Util GetInstance() {
+		if(instance == null) instance = new Util();
+		return instance;
+	}
+	public int getInt(String s) {
 		int i;
 		try {
 			System.out.print(s + "\n>>");
@@ -29,14 +35,14 @@ public class Util {
 		}
 		return i;
 	}
-	String getString(String s) {
+	public String getString(String s) {
 		String data ;
 		System.out.print(s+"\n>>");
 		data = scanner.next();
 		scanner.nextLine();
 		return data;
 	}
-	void CheckFile(File f1, File f2) {
+	private void CheckFile(File f1, File f2) {
 		String s = this.getClass().getPackageName();
 		try {
 			if (f1.exists() == false)
@@ -48,7 +54,7 @@ public class Util {
 			e.printStackTrace();
 		}
 	}
-	void SaveText(String data1, String data2) {
+	public void SaveText(String data1, String data2) {
 		String s = this.getClass().getPackageName();
 		s = "src/" + s;
 		File stuf = new File(s + "/student.txt");
@@ -66,7 +72,7 @@ public class Util {
 		
 	}
 	
-	ArrayList<String> RoadText() {
+	public ArrayList<String> RoadText() {
 		String s = this.getClass().getPackageName();
 		s = "src/" + s;
 		File stuf = new File(s + "/student.txt");

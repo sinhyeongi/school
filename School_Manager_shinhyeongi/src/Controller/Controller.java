@@ -1,6 +1,10 @@
-package School_신현기;
+package Controller;
 
 import java.util.ArrayList;
+
+import DAO.StudentDAO;
+import DAO.SubjectDAO;
+import Model.Util;
 
 public class Controller {
 	Util u;
@@ -8,18 +12,18 @@ public class Controller {
 	private SubjectDAO subdao;
 	public Controller() {
 		// TODO Auto-generated constructor stub
-		u = new Util();
+		u = Util.GetInstance();
 		studao = new StudentDAO();
 		subdao = new SubjectDAO();
 	}
 	//파일 로드
-	void RoadFile(ArrayList<String> data) {
+	private void RoadFile(ArrayList<String> data) {
 		studao.RoadFile(data.get(0));
 		subdao.RoadFile(data.get(1));
 		System.out.println("파일 로드 완료");
 	}
 	//학생 추가
-	void NewStudent() {
+	private void NewStudent() {
 		String id = u.getString("id를 입력해주세요");
 		if(studao.CheckStuId(id)) {
 			System.err.println("중복된 id입니다.");
@@ -29,7 +33,7 @@ public class Controller {
 		studao.NewStudent(id, name);
 	}
 	//전체 학생출력
-	void PrintAllStudent() {
+	private void PrintAllStudent() {
 		if(studao.GetSize() == 0) {
 			System.out.println("데이터가 없습니다!");
 			return;
@@ -43,7 +47,7 @@ public class Controller {
 		}
 	}
 	//학생삭제
-	void DeleteStudent() {
+	private void DeleteStudent() {
 		if(studao.GetSize() == 0) {
 			System.err.println("데이터가 없습니다!");
 			return;
@@ -56,7 +60,7 @@ public class Controller {
 		subdao.DeleteStudent(studao.DeleteStudent(id));
 	}
 	//과목추가
-	void NewSubject() {
+	private void NewSubject() {
 		int hackbun = u.getInt("학번을 입력하세요");
 		if(hackbun == -1) return;
 		if(studao.Studenthackbun(hackbun) == -1) {
@@ -67,7 +71,7 @@ public class Controller {
 		subdao.NewSubject(hackbun, name);
 	}	
 	//subject삭제
-	void DeleteSubject() {
+	private void DeleteSubject() {
 		int hackbun = u.getInt("학번을 입력하세요");
 		if(hackbun == -1) return;
 		if(studao.Studenthackbun(hackbun) == -1) {
@@ -78,7 +82,7 @@ public class Controller {
 		subdao.DeleteSubject(hackbun, name);
 	}
 	//메인실행부분
-	void run() {
+	public void run() {
 		RoadFile(u.RoadText());
 		while(true) {
 			mainMenu();
@@ -134,11 +138,11 @@ public class Controller {
 			
 		}
 	}
-	boolean CheckInp(int i) {
+	private boolean CheckInp(int i) {
 		if(i < 0 || i > 8) return true;
 		return false;
 	}
-	void mainMenu() {
+	private void mainMenu() {
 		System.out.println("[1]학생추가"); // 학번(1001) 자동증가 : 학생id 중복 불가  
 		System.out.println("[2]학생삭제"); // 학생 id 입력후 삭제 과목도 같이 삭제 
 		System.out.println("[3]과목추가"); //학번 입력후 점수 랜덤 50-100 : 과목이름 중복 저장불가능

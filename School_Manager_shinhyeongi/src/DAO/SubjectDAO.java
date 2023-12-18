@@ -1,6 +1,8 @@
-package School_신현기;
+package DAO;
 
 import java.util.ArrayList;
+
+import Model.Subject;
 
 public class SubjectDAO {
 	ArrayList<Subject> sublist;
@@ -9,7 +11,7 @@ public class SubjectDAO {
 		// TODO Auto-generated constructor stub
 		sublist = new ArrayList<Subject>();
 	}
-	String SaveData(){
+	public String SaveData(){
 		String data ="";
 		for(Subject sub : sublist) {
 			data +=sub.toString()+"\n";
@@ -19,7 +21,7 @@ public class SubjectDAO {
 		return data;
 	}
 	// 데이터 로드
-	void RoadFile(String data) {
+	public void RoadFile(String data) {
 		if(sublist.size() != 0)
 			sublist.clear();
 		ArrayList<String>list = new ArrayList<String>();
@@ -32,9 +34,9 @@ public class SubjectDAO {
 	}
 
 	// student삭제시 subject삭제
-	void DeleteStudent(int No) {
+	public void DeleteStudent(int No) {
 		for (int i = 0; i < sublist.size(); i++) {
-			if (sublist.get(i).stuNo == No) {
+			if (sublist.get(i).getStuNo() == No) {
 				sublist.remove(i);
 				i--;
 			}
@@ -42,22 +44,22 @@ public class SubjectDAO {
 	}
 
 	// sublist에 학번과 이름이 같은 것이 있는지 체크
-	boolean CheckStudentSubject(String name, int hack) {
+	private boolean CheckStudentSubject(String name, int hack) {
 		for (Subject s : sublist) {
-			if (s.stuNo == hack && s.subName.equals(name))
+			if (s.getStuNo() == hack && s.getSubName().equals(name))
 				return true;
 		}
 		return false;
 	}
-	boolean CheckStudentSubject(String name) {
+	public boolean CheckStudentSubject(String name) {
 		for (Subject s : sublist) {
-			if (s.subName.equals(name))
+			if (s.getSubName().equals(name))
 				return false;
 		}
 		return true;
 	}
 	
-	ArrayList<String> UserSubjectData(ArrayList<String> data) {
+	public ArrayList<String> UserSubjectData(ArrayList<String> data) {
 		ArrayList<String> d = new ArrayList<String>();
 		ArrayList<Double> sum = new ArrayList<Double>();
 		for (int i = 0; i < data.size(); i++) {
@@ -65,9 +67,9 @@ public class SubjectDAO {
 			double dou = 0;
 			int count = 0;
 			for (int i2 = 0; i2 < sublist.size(); i2++) {
-				if (Integer.parseInt(data.get(i).split("\t")[0]) == sublist.get(i2).stuNo) {
-					dataa += sublist.get(i2).subName + " " + sublist.get(i2).score + "점,";
-					dou += sublist.get(i2).score;
+				if (Integer.parseInt(data.get(i).split("\t")[0]) == sublist.get(i2).getStuNo()) {
+					dataa += sublist.get(i2).getSubName() + " " + sublist.get(i2).getScore() + "점,";
+					dou += sublist.get(i2).getScore();
 					count++;
 				}
 			}
@@ -97,7 +99,7 @@ public class SubjectDAO {
 		}
 		return d;
 	}
-	ArrayList<String> UserSubjectData_Name(ArrayList<String> data) {
+	public ArrayList<String> UserSubjectData_Name(ArrayList<String> data) {
 		ArrayList<String> d = new ArrayList<String>();
 		ArrayList<Double> sum = new ArrayList<Double>();
 		for (int i = 0; i < data.size(); i++) {
@@ -105,9 +107,9 @@ public class SubjectDAO {
 			double dou = 0;
 			int count = 0;
 			for (int i2 = 0; i2 < sublist.size(); i2++) {
-				if (Integer.parseInt(data.get(i).split("\t")[0]) == sublist.get(i2).stuNo) {
-					dataa += sublist.get(i2).subName + " " + sublist.get(i2).score + "점,";
-					dou += sublist.get(i2).score;
+				if (Integer.parseInt(data.get(i).split("\t")[0]) == sublist.get(i2).getStuNo()) {
+					dataa += sublist.get(i2).getSubName() + " " + sublist.get(i2).getScore() + "점,";
+					dou += sublist.get(i2).getScore();
 					count++;
 				}
 			}
@@ -144,7 +146,7 @@ public class SubjectDAO {
 		return d;
 	}
 	// 새로운 subject생성
-	void NewSubject(int hack, String name) {
+	public void NewSubject(int hack, String name) {
 		if (CheckStudentSubject(name, hack)) {
 			System.err.println("중복된 과목 이름입니다.");
 			return;
@@ -154,12 +156,12 @@ public class SubjectDAO {
 
 	}
 	//과목명 학생 NO리턴
-	String SubjectName(String name) {
+	public String SubjectName(String name) {
 		int count = 0;
 		String No = "";
 		for(Subject s : sublist) {
-			if(s.subName.equals(name)) {
-				No += s.stuNo+"/";
+			if(s.getSubName().equals(name)) {
+				No += s.getStuNo()+"/";
 				count++;
 			}
 		}
@@ -167,15 +169,15 @@ public class SubjectDAO {
 		No = No.substring(0,No.length()-1);
 		return No;
 	}
-	int SubjectIdx(String name, int hack) {
+	public int SubjectIdx(String name, int hack) {
 		for (int i = 0; i < sublist.size(); i++) {
-			if (sublist.get(i).stuNo == hack && name.equals(sublist.get(i).subName))
+			if (sublist.get(i).getStuNo() == hack && name.equals(sublist.get(i).getSubName()))
 				return i;
 		}
 		return -1;
 	}
 
-	void DeleteSubject(int hack, String name) {
+	public void DeleteSubject(int hack, String name) {
 		int idx = SubjectIdx(name, hack);
 		if (idx == -1) {
 			System.err.println(hack + "해당 학번에 " + name + "과목이 존재하지 않습니다.");
